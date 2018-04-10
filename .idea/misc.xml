@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/marvel-framework-demo" />
     <file type="web" url="file://$PROJECT_DIR$/marvel-framework-servlet" />
     <file type="web" url="file://$PROJECT_DIR$/marvel-framwork-servlet" />
   </component>
@@ -12,6 +13,8 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/marvel-framework-servlet/pom.xml" />
+        <option value="$PROJECT_DIR$/marvel-framework-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/marvel-framework-core/pom.xml" />
       </list>
     </option>
   </component>

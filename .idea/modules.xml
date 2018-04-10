@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/marvel-framework.iml" filepath="$PROJECT_DIR$/.idea/marvel-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/marvel-framework-core/marvel-framework-core.iml" filepath="$PROJECT_DIR$/marvel-framework-core/marvel-framework-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/marvel-framework-demo/marvel-framework-demo.iml" filepath="$PROJECT_DIR$/marvel-framework-demo/marvel-framework-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/marvel-framework-servlet/marvel-framework-servlet.iml" filepath="$PROJECT_DIR$/marvel-framework-servlet/marvel-framework-servlet.iml" />
     </modules>
   </component>

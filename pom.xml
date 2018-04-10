@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>marvel-framework-servlet</module>
+        <module>marvel-framework-demo</module>
     </modules>
     <packaging>pom</packaging>
 
