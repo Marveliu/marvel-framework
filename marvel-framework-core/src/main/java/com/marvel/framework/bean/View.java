@@ -1,4 +1,4 @@
-package com.marvel.framework.util;
+package com.marvel.framework.bean;
 /*
  * Copyright [2018] [Marveliu]
  *
@@ -15,38 +15,43 @@ package com.marvel.framework.util;
  * limitations under the License.
  */
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 字符串工具类
+ * 返回视图类型
  * @author Marveliu
- * @since 10/04/2018
+ * @since 11/04/2018
  **/
 
-public final class StringUtil {
+public class View {
 
     /**
-     * 判断字符串是否为空
+     * 视图路径
      */
-    public static boolean isEmpty(String str) {
-        if(str != null){
-            str.trim();
-        }
-        return StringUtils.isEmpty(str);
+    private String path;
+
+    /**
+     * 模型数据
+     */
+    private Map<String, Object> model;
+
+    public View(String path) {
+        this.path = path;
+        model = new HashMap<String, Object>();
     }
 
-    /**
-     * 判断字符串是否非空
-     */
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
+    public View addModel(String key, Object value) {
+        model.put(key, value);
+        return this;
     }
 
+    public String getPath() {
+        return path;
+    }
 
-    /**
-     * 分割固定格式的字符串
-     */
-    public static String[] splitString(String str, String separator) {
-        return StringUtils.splitByWholeSeparator(str, separator);
+    public Map<String, Object> getModel() {
+        return model;
     }
 }
+

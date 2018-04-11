@@ -1,4 +1,4 @@
-package com.marvel.framework.util;
+package com.marvel.framework.bean;
 /*
  * Copyright [2018] [Marveliu]
  *
@@ -15,38 +15,39 @@ package com.marvel.framework.util;
  * limitations under the License.
  */
 
-import org.apache.commons.lang3.StringUtils;
+import com.marvel.framework.util.CastUtil;
+
+import java.util.Map;
 
 /**
- * 字符串工具类
+ * 请求参数对象
  * @author Marveliu
- * @since 10/04/2018
+ * @since 11/04/2018
  **/
 
-public final class StringUtil {
+public class Param {
 
-    /**
-     * 判断字符串是否为空
-     */
-    public static boolean isEmpty(String str) {
-        if(str != null){
-            str.trim();
-        }
-        return StringUtils.isEmpty(str);
+    private Map<String,Object> paramMap;
+
+
+    public Param(Map<String, Object> paramMap) {
+        this.paramMap = paramMap;
     }
 
     /**
-     * 判断字符串是否非空
+     * 根据参数名获得long
+     * @param name
+     * @return
      */
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
+    public long getLong(String name){
+        return CastUtil.castLong(paramMap.get(name));
     }
 
-
     /**
-     * 分割固定格式的字符串
+     * 返回所有请求参数信息
+     * @return
      */
-    public static String[] splitString(String str, String separator) {
-        return StringUtils.splitByWholeSeparator(str, separator);
+    public Map<String, Object> getMap() {
+        return paramMap;
     }
 }

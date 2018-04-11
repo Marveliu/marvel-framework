@@ -15,38 +15,27 @@ package com.marvel.framework.util;
  * limitations under the License.
  */
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
- * 字符串工具类
+ * 数组工具类
  * @author Marveliu
- * @since 10/04/2018
+ * @since 11/04/2018
  **/
 
-public final class StringUtil {
+public final class ArrayUtil {
 
     /**
-     * 判断字符串是否为空
+     * 判断数组是否非空
      */
-    public static boolean isEmpty(String str) {
-        if(str != null){
-            str.trim();
-        }
-        return StringUtils.isEmpty(str);
+    public static boolean isNotEmpty(Object[] array) {
+        return !ArrayUtils.isEmpty(array);
     }
 
     /**
-     * 判断字符串是否非空
+     * 判断数组是否为空
      */
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
-    }
-
-
-    /**
-     * 分割固定格式的字符串
-     */
-    public static String[] splitString(String str, String separator) {
-        return StringUtils.splitByWholeSeparator(str, separator);
+    public static boolean isEmpty(Object[] array) {
+        return ArrayUtils.isEmpty(array);
     }
 }
