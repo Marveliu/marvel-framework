@@ -30,12 +30,16 @@ import java.util.Set;
 
 public final class BeanHelper {
 
+    // class类型和实例之间映射
     private static final Map<Class<?>, Object> BEAN_MAP = new HashMap<Class<?>, Object>();
 
     static {
+        // 获得所有的类
         Set<Class<?>> beanClassSet = ClassHelper.getBeanClassSet();
         for (Class<?> beanClass : beanClassSet) {
+            // 创建实例
             Object obj = ReflectionUtil.newInstance(beanClass);
+            // 存储类和实例之间的映射
             BEAN_MAP.put(beanClass, obj);
         }
     }

@@ -1,4 +1,4 @@
-package com.marveliu.model;
+package com.marvel.model;
 /*
  * Copyright [2018] [Marveliu]
  *

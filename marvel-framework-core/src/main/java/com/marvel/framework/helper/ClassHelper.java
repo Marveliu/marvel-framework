@@ -39,7 +39,9 @@ public final class ClassHelper {
     private static final Set<Class<?>> CLASS_SET;
 
     static {
+        // 获得AppBase 包目录
         String basePackage = ConfigHelper.getAppBasePackage();
+        // 加载包下所有的类
         CLASS_SET = ClassUtil.getClassSet(basePackage);
     }
 
@@ -101,6 +103,7 @@ public final class ClassHelper {
 
     /**
      * 获取应用包名下带有某注解的所有类
+     * 用来获得Aspect之类的注解
      */
     public static Set<Class<?>> getClassSetByAnnotation(Class<? extends Annotation> annotationClass) {
         Set<Class<?>> classSet = new HashSet<Class<?>>();

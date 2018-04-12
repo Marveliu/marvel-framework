@@ -1,4 +1,4 @@
-package com.marveliu.controller;
+package com.marvel.controller;
 /*
  * Copyright [2018] [Marveliu]
  *
@@ -20,8 +20,8 @@ package com.marveliu.controller;
  * @since 10/04/2018
  **/
 
-import com.marveliu.model.Customer;
-import com.marveliu.service.CustomerService;
+import com.marvel.model.Customer;
+import com.marvel.service.CustomerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

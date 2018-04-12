@@ -1,4 +1,4 @@
-package com.marvel.framework;
+package com.marvel.util;
 /*
  * Copyright [2018] [Marveliu]
  *
@@ -15,27 +15,32 @@ package com.marvel.framework;
  * limitations under the License.
  */
 
-import com.marvel.framework.helper.*;
-import com.marvel.framework.util.ClassUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * 加载相应的 Helper 类
+ * 字符串工具类
  * @author Marveliu
- * @since 11/04/2018
+ * @since 10/04/2018
  **/
 
-public final class HelperLoader {
+public final class StringUtil {
 
-    public static void init() {
-        Class<?>[] classList = {
-                ClassHelper.class,
-                BeanHelper.class,
-                AopHelper.class,    //Aop获得代理对象，Ioc才能依赖注入
-                IocHelper.class,
-                ControllerHelper.class
-        };
-        for (Class<?> cls : classList) {
-            ClassUtil.loadClass(cls.getName());
+    /**
+     * 判断字符串是否为空
+     */
+    public static boolean isEmpty(String str) {
+        if(str != null){
+            str.trim();
         }
+        return StringUtils.isEmpty(str);
     }
+
+
+    /**
+     * 判断字符串是否非空
+     */
+    public static boolean isNotEmpty(String str) {
+        return !isEmpty(str);
+    }
+
 }

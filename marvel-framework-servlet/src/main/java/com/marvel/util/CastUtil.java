@@ -1,4 +1,4 @@
-package com.marveliu.util;
+package com.marvel.util;
 /*
  * Copyright [2018] [Marveliu]
  *

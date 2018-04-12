@@ -54,7 +54,6 @@ public final class ControllerHelper {
                             // 加载action,获得URL映射规则
                             Action action = method.getAnnotation(Action.class);
                             String mapping = action.value();
-
                             // 验证URL映射规则
                             if (mapping.matches("\\w+:/\\w*")) {
                                 String[] array = mapping.split(":");

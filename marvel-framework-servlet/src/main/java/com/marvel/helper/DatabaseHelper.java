@@ -1,4 +1,4 @@
-package com.marveliu.helper;
+package com.marvel.helper;
 /*
  * Copyright [2018] [Marveliu]
  *
@@ -15,8 +15,8 @@ package com.marveliu.helper;
  * limitations under the License.
  */
 
-import com.marveliu.util.CollectionUtil;
-import com.marveliu.util.PropsUtil;
+import com.marvel.util.CollectionUtil;
+import com.marvel.util.PropsUtil;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;

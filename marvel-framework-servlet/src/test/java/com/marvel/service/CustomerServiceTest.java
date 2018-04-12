@@ -1,7 +1,7 @@
-package com.marveliu.service;
+package com.marvel.service;
 
-import com.marveliu.helper.DatabaseHelper;
-import com.marveliu.model.Customer;
+import com.marvel.helper.DatabaseHelper;
+import com.marvel.model.Customer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

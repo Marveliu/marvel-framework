@@ -1,4 +1,4 @@
-package com.marveliu.util;
+package com.marvel.framework.proxy;
 /*
  * Copyright [2018] [Marveliu]
  *
@@ -15,32 +15,16 @@ package com.marveliu.util;
  * limitations under the License.
  */
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
- * 字符串工具类
+ * 代理接口
  * @author Marveliu
- * @since 10/04/2018
+ * @since 12/04/2018
  **/
 
-public final class StringUtil {
+public interface Proxy {
 
     /**
-     * 判断字符串是否为空
+     * 执行链式代理
      */
-    public static boolean isEmpty(String str) {
-        if(str != null){
-            str.trim();
-        }
-        return StringUtils.isEmpty(str);
-    }
-
-
-    /**
-     * 判断字符串是否非空
-     */
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
-    }
-
+    Object doProxy(ProxyChain proxyChain) throws Throwable;
 }
