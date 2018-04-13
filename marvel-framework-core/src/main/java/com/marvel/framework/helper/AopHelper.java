@@ -16,9 +16,11 @@ package com.marvel.framework.helper;
  */
 
 import com.marvel.framework.annotation.Aspect;
+import com.marvel.framework.annotation.Service;
 import com.marvel.framework.proxy.AspectProxy;
 import com.marvel.framework.proxy.Proxy;
 import com.marvel.framework.proxy.ProxyManager;
+import com.marvel.framework.proxy.TransactionProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +80,17 @@ public final class AopHelper {
     private static Map<Class<?>,Set<Class<?>>> createProxyMap() throws Exception{
         // 存储代理类和目标类结合关系之间的映射
         Map<Class<?>,Set<Class<?>>> proxyMap = new HashMap<Class<?>, Set<Class<?>>>();
+        addAspectProxy(proxyMap);
+        addTransactionProxy(proxyMap);
+        return proxyMap;
+    }
 
+    /**
+     * 添加注解代理
+     * @param proxyMap
+     * @throws Exception
+     */
+    private static void addAspectProxy(Map<Class<?>,Set<Class<?>>> proxyMap) throws Exception{
         // 获得代理类 必须继承AspectProxy和有Aspect注解
         Set<Class<?>> proxyClassSet = ClassHelper.getClassSetBySuper(AspectProxy.class);
         for(Class<?> proxyClass:proxyClassSet){
@@ -89,7 +101,16 @@ public final class AopHelper {
                 proxyMap.put(proxyClass,targetClassSet);
             }
         }
-        return proxyMap;
+    }
+
+    /**
+     * Service注解类绑定事务代理类
+     * @param proxyMap
+     * @throws Exception
+     */
+    private static void addTransactionProxy(Map<Class<?>,Set<Class<?>>> proxyMap) throws Exception{
+        Set<Class<?>> proxyClassSet = ClassHelper.getClassSetBySuper(Service.class);
+        proxyMap.put(TransactionProxy.class,proxyClassSet);
     }
 
 

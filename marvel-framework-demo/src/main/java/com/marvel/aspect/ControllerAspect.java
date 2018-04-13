@@ -15,6 +15,8 @@ package com.marvel.aspect;
  * limitations under the License.
  */
 
+import com.marvel.framework.annotation.Aspect;
+import com.marvel.framework.annotation.Controller;
 import com.marvel.framework.proxy.AspectProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +31,10 @@ import java.lang.reflect.Method;
  * @since 12/04/2018
  **/
 
+@Aspect(Controller.class)
 public class ControllerAspect extends AspectProxy {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ControllerAspect.class);
-
 
     private long begin;
 
@@ -49,6 +51,4 @@ public class ControllerAspect extends AspectProxy {
         LOGGER.debug(String.format("time: %dms", System.currentTimeMillis() - begin));
         LOGGER.debug("----------- end -----------");
     }
-
-
 }
