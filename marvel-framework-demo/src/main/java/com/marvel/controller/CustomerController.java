@@ -30,7 +30,6 @@ import com.marvel.model.Customer;
 import com.marvel.service.CustomerService;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 处理客户管理相关请求
@@ -45,7 +44,7 @@ public class CustomerController {
      * 进入 客户列表 界面
      */
     @Action("get:/customer")
-    public View index(Param param) {
+    public View index() {
         List<Customer> customerList = customerService.getCustomerList();
         return new View("customer.jsp").addModel("customerList", customerList);
     }
@@ -71,12 +70,12 @@ public class CustomerController {
     /**
      * 处理 创建客户 请求
      */
-    @Action("post:/customer_create")
-    public Data createSubmit(Param param) {
-        Map<String, Object> fieldMap = param.getFieldMap();
-        boolean result = customerService.createCustomer(fieldMap);
-        return new Data(result);
-    }
+    // @Action("post:/customer_create")
+    // public Data createSubmit(Param param) {
+    //     Map<String, Object> fieldMap = param.getFieldMap();
+    //     boolean result = customerService.createCustomer(fieldMap);
+    //     return new Data(result);
+    // }
 
     /**
      * 进入 编辑客户 界面
@@ -91,13 +90,13 @@ public class CustomerController {
     /**
      * 处理 编辑客户 请求
      */
-    @Action("put:/customer_edit")
-    public Data editSubmit(Param param) {
-        long id = param.getLong("id");
-        Map<String, Object> fieldMap = param.getFieldMap();
-        boolean result = customerService.updateCustomer(id, fieldMap);
-        return new Data(result);
-    }
+    // @Action("put:/customer_edit")
+    // public Data editSubmit(Param param) {
+    //     long id = param.getLong("id");
+    //     Map<String, Object> fieldMap = param.getFieldMap();
+    //     boolean result = customerService.updateCustomer(id, fieldMap);
+    //     return new Data(result);
+    // }
 
     /**
      * 处理 删除客户 请求

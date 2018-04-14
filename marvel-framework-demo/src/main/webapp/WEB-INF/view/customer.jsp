@@ -9,7 +9,9 @@
 </head>
 <body>
 
-<h1>客户列表</h1>
+<h1><a href="${BASE}/">首页</a> / 客户列表</h1>
+
+<h2><a href="${BASE}/customer_create">创建客户</a></h2>
 
 <table>
     <tr>

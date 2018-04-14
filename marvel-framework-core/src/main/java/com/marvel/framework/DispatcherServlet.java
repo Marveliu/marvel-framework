@@ -64,9 +64,11 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+
         // 获得请求方法和请求路径
         String requestMethod = request.getMethod().toLowerCase();
         String requsetPath = request.getPathInfo();
+
         // 获得Action处理器
         Handler handler = ControllerHelper.getHandler(requestMethod,requsetPath);
 
@@ -105,11 +107,19 @@ public class DispatcherServlet extends HttpServlet {
             Param param = new Param(paramMap);
             // 调用action方法
             Method actionMethod = handler.getActionMethod();
-            Object result = ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+
+
+            Object result = null;
+
+            // action可以无参数
+            if(param.isEmpty()){
+                result = ReflectionUtil.invokeMethod(controllerBean,actionMethod);
+            }else{
+                result = ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+            }
 
             // 处理action返回值
-            if(request instanceof View){
-
+            if(result instanceof View){
                 // 返回jsp
                 View view = (View) result;
                 String path = view.getPath();
@@ -122,14 +132,13 @@ public class DispatcherServlet extends HttpServlet {
                         for (Map.Entry<String,Object>entry:model.entrySet()){
                             request.setAttribute(entry.getKey(),entry.getValue());
                         }
-
                         request.getRequestDispatcher(
                                 ConfigHelper.getAppJspPath()+path)
                                 .forward(request,response);
                     }
                 }
 
-            }else if(request instanceof Data){
+            }else if(result instanceof Data){
                 // 返回json数据
                 Data data = (Data) result;
                 Object model = data.getModel();
@@ -148,10 +157,6 @@ public class DispatcherServlet extends HttpServlet {
 
 
         }
-
-
-
-
 
     }
 }

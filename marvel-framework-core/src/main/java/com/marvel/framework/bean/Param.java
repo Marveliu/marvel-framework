@@ -16,6 +16,7 @@ package com.marvel.framework.bean;
  */
 
 import com.marvel.framework.util.CastUtil;
+import com.marvel.framework.util.CollectionUtil;
 
 import java.util.Map;
 
@@ -32,6 +33,10 @@ public class Param {
 
     public Param(Map<String, Object> paramMap) {
         this.paramMap = paramMap;
+    }
+
+    public Boolean isEmpty(){
+        return CollectionUtil.isEmpty(paramMap);
     }
 
     /**

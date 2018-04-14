@@ -27,14 +27,14 @@ public interface ConfigConstant {
     String CONFIG_FILE = "marvel.properties";
 
     // jdbc相关
-    String JDBC_DRIVER = "marvel.framework.jdbc.driver";
-    String JDBC_URL = "marvel.framework.jdbc.url";
-    String JDBC_USERNAME = "marvel.framework.jdbc.username";
-    String JDBC_PASSWORD = "marvel.framework.jdbc.password";
+    String JDBC_DRIVER = "marvel.jdbc.driver";
+    String JDBC_URL = "marvel.jdbc.url";
+    String JDBC_USERNAME = "marvel.jdbc.username";
+    String JDBC_PASSWORD = "marvel.jdbc.password";
 
     // web app相关目录
-    String APP_BASE_PACKAGE = "marvel.framework.app.base_package";
-    String APP_JSP_PATH = "marvel.framework.app.jsp_path";
-    String APP_ASSET_PATH = "marvel.framework.app.asset_path";
-    String APP_UPLOAD_LIMIT = "marvel.framework.app.upload_limit";
+    String APP_BASE_PACKAGE = "marvel.app.base_package";
+    String APP_JSP_PATH = "marvel.app.jsp_path";
+    String APP_ASSET_PATH = "marvel.app.asset_path";
+    String APP_UPLOAD_LIMIT = "marvel.app.upload_limit";
 }

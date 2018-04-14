@@ -42,7 +42,7 @@ public class PropsUtil {
         try {
             is = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
             if(is == null){
-                throw new FileNotFoundException(fileName+"file not found!");
+                throw new FileNotFoundException("file not found:"+fileName);
             }
             props = new Properties();
             props.load(is);
