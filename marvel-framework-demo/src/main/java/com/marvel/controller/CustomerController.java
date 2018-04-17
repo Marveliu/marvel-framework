@@ -30,6 +30,7 @@ import com.marvel.model.Customer;
 import com.marvel.service.CustomerService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 处理客户管理相关请求
@@ -63,19 +64,19 @@ public class CustomerController {
      * 进入 创建客户 界面
      */
     @Action("get:/customer_create")
-    public View create(Param param) {
+    public View create() {
         return new View("customer_create.jsp");
     }
 
     /**
      * 处理 创建客户 请求
      */
-    // @Action("post:/customer_create")
-    // public Data createSubmit(Param param) {
-    //     Map<String, Object> fieldMap = param.getFieldMap();
-    //     boolean result = customerService.createCustomer(fieldMap);
-    //     return new Data(result);
-    // }
+    @Action("post:/customer_create")
+    public Data createSubmit(Param param) {
+        Map<String, Object> fieldMap = param.getFieldMap();
+        boolean result = customerService.createCustomer(fieldMap);
+        return new Data(result);
+    }
 
     /**
      * 进入 编辑客户 界面

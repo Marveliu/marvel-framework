@@ -1,18 +1,13 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<c:set var="BASE" value="${pageContext.request.contextPath}"/>
-
 <html>
 <head>
-    <title>客户管理 - 编辑客户</title>
+    <title>客户管理 - 创建客户</title>
 </head>
 <body>
 
-<h1><a href="${BASE}/">首页</a> / <a href="${BASE}/customer">客户管理</a> / 编辑客户界面</h1>
+<h1><a href="${BASE}/">首页</a> / <a href="${BASE}/customer">客户管理</a> / 创建客户</h1>
 
-<form id="customer_form">
-    <input type="hidden" name="id" value="${customer.id}">
+<form id="customer_form" enctype="multipart/form-data">
     <table>
         <tr>
             <td>客户名称：</td>
@@ -38,6 +33,12 @@
                 <input type="text" name="email" value="${customer.email}">
             </td>
         </tr>
+        <tr>
+            <td>照片：</td>
+            <td>
+                <input type="file" name="photo" value="${customer.photo}">
+            </td>
+        </tr>
     </table>
     <button type="submit">保存</button>
 </form>
@@ -47,8 +48,8 @@
 <script>
     $(function() {
         $('#customer_form').ajaxForm({
-            type: 'put',
-            url: '${BASE}/customer_edit',
+            type: 'post',
+            url: '${BASE}/customer_create',
             success: function(data) {
                 if (data) {
                     location.href = '${BASE}/customer';

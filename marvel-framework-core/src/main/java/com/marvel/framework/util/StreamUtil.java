@@ -57,7 +57,9 @@ public final class StreamUtil {
     public static void copyStream(InputStream inputStream, OutputStream outputStream) {
         try {
             int length;
+            // buffer数组 4k
             byte[] buffer = new byte[4 * 1024];
+            // 循环读
             while ((length = inputStream.read(buffer, 0, buffer.length)) != -1) {
                 outputStream.write(buffer, 0, length);
             }

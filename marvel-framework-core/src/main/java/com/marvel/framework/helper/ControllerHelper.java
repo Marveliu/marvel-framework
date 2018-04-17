@@ -40,9 +40,7 @@ public final class ControllerHelper {
     static {
         // 获得controller类
         Set<Class<?>> controllerClassSet = ClassHelper.getControllerClassSet();
-
         if (CollectionUtil.isNotEmpty(controllerClassSet)) {
-
             // 遍历controller
             for (Class<?> controllerClass : controllerClassSet) {
                 // 遍历controller methods
