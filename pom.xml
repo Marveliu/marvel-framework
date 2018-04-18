@@ -10,6 +10,7 @@
     <modules>
         <module>marvel-framework-servlet</module>
         <module>marvel-framework-demo</module>
+        <module>marvel-plugin-security</module>
     </modules>
     <packaging>pom</packaging>
 
