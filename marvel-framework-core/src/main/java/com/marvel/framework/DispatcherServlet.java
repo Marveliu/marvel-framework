@@ -69,48 +69,53 @@ public class DispatcherServlet extends HttpServlet {
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
 
-        // 获得请求方法和请求路径
-        String requestMethod = request.getMethod().toLowerCase();
-        String requsetPath = request.getPathInfo();
+        ServletHelper.init(request,response);
+        try {
+            // 获得请求方法和请求路径
+            String requestMethod = request.getMethod().toLowerCase();
+            String requsetPath = request.getPathInfo();
 
-        if(requsetPath.equals("/favicon.ico")){
-            return;
-        }
-        // 获得Action处理器
-        Handler handler = ControllerHelper.getHandler(requestMethod,requsetPath);
-        // 获取Controller类及其Bean实例
-        if(handler != null){
-            Class<?> controllerClass = handler.getControllerClass();
-            Object controllerBean = BeanHelper.getBean(controllerClass);
+            if(requsetPath.equals("/favicon.ico")){
+                return;
+            }
+            // 获得Action处理器
+            Handler handler = ControllerHelper.getHandler(requestMethod,requsetPath);
+            // 获取Controller类及其Bean实例
+            if(handler != null){
+                Class<?> controllerClass = handler.getControllerClass();
+                Object controllerBean = BeanHelper.getBean(controllerClass);
 
-            // 创建请求参数对象
-            Param param;
+                // 创建请求参数对象
+                Param param;
 
-            if(UploadHelper.isMutipart(request)){
-                param = UploadHelper.createParam(request);
+                if(UploadHelper.isMutipart(request)){
+                    param = UploadHelper.createParam(request);
+                }else {
+                    param = RequestHelper.createParam(request);
+                }
+
+                Object result = null;
+                // 调用action方法
+                Method actionMethod = handler.getActionMethod();
+
+                // action可以无参数
+                if(param.isEmpty()){
+                    result = ReflectionUtil.invokeMethod(controllerBean,actionMethod);
+                }else{
+                    result = ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+                }
+
+                // 处理action返回值
+                if(result instanceof View){
+                    handleViewResult((View) result,request,response);
+                }else if(result instanceof Data){
+                    handleDataResult((Data) result,response);
+                }
             }else {
-                param = RequestHelper.createParam(request);
+                LOGGER.info("NO ACTION MATCH:method-"+requestMethod+",path-"+requsetPath);
             }
-
-            Object result = null;
-            // 调用action方法
-            Method actionMethod = handler.getActionMethod();
-
-            // action可以无参数
-            if(param.isEmpty()){
-                result = ReflectionUtil.invokeMethod(controllerBean,actionMethod);
-            }else{
-                result = ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
-            }
-
-            // 处理action返回值
-            if(result instanceof View){
-                handleViewResult((View) result,request,response);
-            }else if(result instanceof Data){
-                handleDataResult((Data) result,response);
-            }
-        }else {
-            LOGGER.info("NO ACTION MATCH:method-"+requestMethod+",path-"+requsetPath);
+        }finally {
+            ServletHelper.destroy();
         }
     }
 
