@@ -1,19 +1,4 @@
 package com.marvel.framework.helper;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +17,7 @@ import java.io.IOException;
  **/
 
 public final class ServletHelper {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ServletHelper.class);
 
     /**
@@ -47,7 +33,12 @@ public final class ServletHelper {
         this.request = request;
     }
 
-    // 初始化
+    /**
+     * 初始化
+     *
+     * @param request
+     * @param response
+     */
     public static void init(HttpServletRequest request, HttpServletResponse response) {
         SERVLET_HELPER_HOLDER.set(new ServletHelper(request, response));
     }
@@ -109,6 +100,8 @@ public final class ServletHelper {
 
     /**
      * 发送重定向响应
+     *
+     * @param location
      */
     public static void sendRedirect(String location) {
         try {
@@ -117,6 +110,8 @@ public final class ServletHelper {
             LOGGER.error("redirect failure", e);
         }
     }
+
+    /****************** Session相关 *********************/
 
     /**
      * 将属性放入 Session 中

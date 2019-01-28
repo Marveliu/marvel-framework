@@ -1,19 +1,4 @@
 package com.marvel.framework;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import com.marvel.framework.bean.Data;
 import com.marvel.framework.bean.Handler;
@@ -41,92 +26,110 @@ import java.util.Map;
 
 /**
  * 请求转发器
+ * <p>
+ * loadOnStartup = 0 最先启动，核心类
+ *
  * @author Marveliu
  * @since 11/04/2018
  **/
 
-// 最先启动
 @WebServlet(urlPatterns = "/*", loadOnStartup = 0)
 public class DispatcherServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DispatcherServlet.class);
 
-
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
-        // 初始化helperloader
-        HelperLoader.init();;
+        // 初始化helperloader,即初始化整个IOC
+        HelperLoader.init();
         // 获取ServletContext对象，注册Servlet
-        ServletContext servletContext =  servletConfig.getServletContext();
+        ServletContext servletContext = servletConfig.getServletContext();
         // 注册处理jsp servlet
         ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
-        jspServlet.addMapping(ConfigHelper.getAppJspPath()+"*");
+        jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
         // 注册处理静态资源的servlet
         ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
-        defaultServlet.addMapping(ConfigHelper.getAppAssetPath()+"*");
+        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
+        // 配置文件上传
         UploadHelper.init(servletContext);
     }
 
-    public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+    /**
+     * 重载service，进行请求的转发
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        ServletHelper.init(request,response);
+        ServletHelper.init(request, response);
         try {
             // 获得请求方法和请求路径
             String requestMethod = request.getMethod().toLowerCase();
             String requsetPath = request.getPathInfo();
 
-            if(requsetPath.equals("/favicon.ico")){
+            if (requsetPath.equals("/favicon.ico")) {
                 return;
             }
-            // 获得Action处理器
-            Handler handler = ControllerHelper.getHandler(requestMethod,requsetPath);
+            // 获得URl对应的handler
+            Handler handler = ControllerHelper.getHandler(requestMethod, requsetPath);
             // 获取Controller类及其Bean实例
-            if(handler != null){
+            if (handler != null) {
                 Class<?> controllerClass = handler.getControllerClass();
                 Object controllerBean = BeanHelper.getBean(controllerClass);
-
                 // 创建请求参数对象
                 Param param;
-
-                if(UploadHelper.isMutipart(request)){
+                // 判断是否为文件上传
+                if (UploadHelper.isMutipart(request)) {
                     param = UploadHelper.createParam(request);
-                }else {
+                } else {
                     param = RequestHelper.createParam(request);
                 }
 
                 Object result = null;
-                // 调用action方法
+                // 获得URL对应的方法
                 Method actionMethod = handler.getActionMethod();
-
-                // action可以无参数
-                if(param.isEmpty()){
-                    result = ReflectionUtil.invokeMethod(controllerBean,actionMethod);
-                }else{
-                    result = ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+                // 反射进行方法调用
+                if (param.isEmpty()) {
+                    result = ReflectionUtil.invokeMethod(controllerBean, actionMethod);
+                } else {
+                    result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
                 }
-
-                // 处理action返回值
-                if(result instanceof View){
-                    handleViewResult((View) result,request,response);
-                }else if(result instanceof Data){
-                    handleDataResult((Data) result,response);
+                if (result instanceof View) {
+                    // 服务端html渲染
+                    handleViewResult((View) result, request, response);
+                } else if (result instanceof Data) {
+                    // 返回json
+                    handleDataResult((Data) result, response);
                 }
-            }else {
-                LOGGER.info("NO ACTION MATCH:method-"+requestMethod+",path-"+requsetPath);
+            } else {
+                LOGGER.info("NO ACTION MATCH:method-" + requestMethod + ",path-" + requsetPath);
             }
-        }finally {
+        } finally {
             ServletHelper.destroy();
         }
     }
 
-    // 处理视图结果
+    /**
+     * 处理视图结果
+     *
+     * @param view
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
     private void handleViewResult(View view, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String path = view.getPath();
         if (StringUtil.isNotEmpty(path)) {
-            // 解析path
             if (path.startsWith("/")) {
+                // 重定向
                 response.sendRedirect(request.getContextPath() + path);
             } else {
+                // jsp进行渲染
                 Map<String, Object> model = view.getModel();
                 for (Map.Entry<String, Object> entry : model.entrySet()) {
                     request.setAttribute(entry.getKey(), entry.getValue());
@@ -136,10 +139,16 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
-    // 处理Data结果
+    /**
+     * 处理Data类的视图
+     * 返回json数据
+     *
+     * @param data
+     * @param response
+     * @throws IOException
+     */
     private void handleDataResult(Data data, HttpServletResponse response) throws IOException {
         Object model = data.getModel();
-        // 返回json数据
         if (model != null) {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

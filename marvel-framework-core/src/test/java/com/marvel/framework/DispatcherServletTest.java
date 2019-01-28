@@ -6,6 +6,9 @@ import org.junit.Test;
 import org.mockserver.client.server.MockServerClient;
 import org.mockserver.junit.MockServerRule;
 
+/**
+ * DispatcherServlet 测试
+ */
 public class DispatcherServletTest {
 
     @Rule
@@ -18,17 +21,14 @@ public class DispatcherServletTest {
 
     @Before
     public void setUp() throws Exception {
-        mockServerClient = new MockServerClient("localhost",5000);
+        mockServerClient = new MockServerClient("localhost", 5000);
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
         dispatcherServlet.init();
-
     }
 
     @Test
     public void service() {
-
-
-
+        // mockServerClient.
     }
 
 }

@@ -1,19 +1,4 @@
 package com.marvel.framework.proxy;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +7,7 @@ import java.lang.reflect.Method;
 
 /**
  * 切面代理
+ *
  * @author Marveliu
  * @since 12/04/2018
  **/
@@ -32,8 +18,9 @@ public abstract class AspectProxy implements Proxy {
 
     /**
      * 对切点依次执行代理链上面的代理信息
-     * @param proxyChain    代理链
-     * @return  代理执行结果
+     *
+     * @param proxyChain 代理链
+     * @return 代理执行结果
      * @throws Throwable
      */
     @Override
@@ -48,18 +35,18 @@ public abstract class AspectProxy implements Proxy {
 
         try {
             // 钩子方法，确定是否进行拦截
-            if(intercept(cls,method,params)){
-                before(cls,method,params);
+            if (intercept(cls, method, params)) {
+                before(cls, method, params);
                 result = proxyChain.doProxyChain();
-                after(cls,method,params,result);
-            }else {
+                after(cls, method, params, result);
+            } else {
                 result = proxyChain.doProxyChain();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("proxy failure!");
-            error(cls,method,params,e);
-            throw(e);
-        }finally {
+            error(cls, method, params, e);
+            throw (e);
+        } finally {
             end();
         }
         return result;

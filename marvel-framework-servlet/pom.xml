@@ -39,7 +39,6 @@
             <version>1.2</version>
             <scope>runtime</scope>
         </dependency>
-
         <!-- JUnit 测试-->
         <dependency>
             <groupId>junit</groupId>
@@ -47,7 +46,6 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-
         <!-- SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -88,8 +86,6 @@
             <artifactId>commons-dbcp2</artifactId>
             <version>2.0.1</version>
         </dependency>
-
-
 
     </dependencies>
 

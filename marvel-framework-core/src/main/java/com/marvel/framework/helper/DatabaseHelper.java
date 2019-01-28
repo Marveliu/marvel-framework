@@ -1,19 +1,4 @@
 package com.marvel.framework.helper;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import com.marvel.framework.util.ClassUtil;
 import com.marvel.framework.util.CollectionUtil;
@@ -32,6 +17,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
+ * 数据库工具类
+ *
  * @author Marveliu
  * @since 13/04/2018
  **/
@@ -51,7 +38,9 @@ public final class DatabaseHelper {
         QUERY_RUNNER = new QueryRunner();
         DATA_SOURCE = new BasicDataSource();
 
-        // datasource 初始化配置
+        /**
+         * datasource 初始化配置，返回数据库连接工厂
+         */
         DATA_SOURCE.setDriverClassName(ConfigHelper.getJdbcDriver());
         DATA_SOURCE.setUsername(ConfigHelper.getJdbcUsername());
         DATA_SOURCE.setPassword(ConfigHelper.getJdbcPassword());
@@ -60,26 +49,28 @@ public final class DatabaseHelper {
 
     /**
      * 获得数据源
+     *
      * @return
      */
-    public static DataSource getDataSource(){
+    public static DataSource getDataSource() {
         return DATA_SOURCE;
     }
 
 
     /**
      * 获得数据库连接
+     *
      * @return
      */
-    public static Connection getConnection(){
-        Connection conn  = CONNECTION_HOLDER.get();
-        if(conn == null){
-            try{
+    public static Connection getConnection() {
+        Connection conn = CONNECTION_HOLDER.get();
+        if (conn == null) {
+            try {
                 conn = DATA_SOURCE.getConnection();
-            }catch (Exception e){
-                LOGGER.error("get connection failure...",e);
+            } catch (Exception e) {
+                LOGGER.error("get connection failure...", e);
                 throw new RuntimeException(e);
-            }finally {
+            } finally {
                 CONNECTION_HOLDER.set(conn);
             }
         }
@@ -91,13 +82,13 @@ public final class DatabaseHelper {
      */
     public static void beginTransaction() {
         Connection conn = getConnection();
-        if(conn != null){
+        if (conn != null) {
             try {
                 conn.setAutoCommit(false);
-            }catch (Exception e){
-                LOGGER.error("begin transaction failure...",e);
+            } catch (Exception e) {
+                LOGGER.error("begin transaction failure...", e);
                 throw new RuntimeException(e);
-            }finally {
+            } finally {
                 CONNECTION_HOLDER.set(conn);
             }
         }
@@ -106,17 +97,17 @@ public final class DatabaseHelper {
     /**
      * 提交事务
      */
-    public static void commitTransaction(){
+    public static void commitTransaction() {
         Connection conn = getConnection();
         try {
-            if (conn != null){
-                conn.commit();;
+            if (conn != null) {
+                conn.commit();
                 conn.close();
             }
-        }catch(Exception e){
-            LOGGER.error("commit transaction failure..",e);
+        } catch (Exception e) {
+            LOGGER.error("commit transaction failure..", e);
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             CONNECTION_HOLDER.remove();
         }
     }

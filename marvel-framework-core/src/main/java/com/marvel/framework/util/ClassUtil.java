@@ -1,19 +1,4 @@
 package com.marvel.framework.util;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +15,8 @@ import java.util.jar.JarFile;
 
 
 /**
- * 类加载器
+ * 类加载工具类
+ *
  * @author Marveliu
  * @since 10/04/2018
  **/
@@ -48,6 +34,10 @@ public final class ClassUtil {
 
     /**
      * 加载类
+     *
+     * @param className     类名
+     * @param isInitialized 是否初始化
+     * @return
      */
     public static Class<?> loadClass(String className, boolean isInitialized) {
         Class<?> cls;
@@ -69,6 +59,9 @@ public final class ClassUtil {
 
     /**
      * 获取指定包名下的所有类 class文件或者jar
+     *
+     * @param packageName
+     * @return
      */
     public static Set<Class<?>> getClassSet(String packageName) {
         // 存储所有加载的类
@@ -76,16 +69,16 @@ public final class ClassUtil {
         try {
             // 分解路径
             Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".", "/"));
-
             while (urls.hasMoreElements()) {
                 URL url = urls.nextElement();
                 if (url != null) {
                     String protocol = url.getProtocol();
-                    // 协议比较
                     if (protocol.equals("file")) {
+                        // class文件直接加入classSet
                         String packagePath = url.getPath().replaceAll("%20", " ");
                         addClass(classSet, packagePath, packageName);
                     } else if (protocol.equals("jar")) {
+                        // jar文件，遍历jar包里面的所有class文件
                         JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
                         if (jarURLConnection != null) {
                             JarFile jarFile = jarURLConnection.getJarFile();
@@ -111,7 +104,13 @@ public final class ClassUtil {
         return classSet;
     }
 
-    // 添加class
+    /**
+     * 添加class
+     *
+     * @param classSet
+     * @param packagePath
+     * @param packageName
+     */
     private static void addClass(Set<Class<?>> classSet, String packagePath, String packageName) {
         File[] files = new File(packagePath).listFiles(new FileFilter() {
             public boolean accept(File file) {
@@ -141,6 +140,12 @@ public final class ClassUtil {
         }
     }
 
+    /**
+     * 添加jar包里面的class
+     *
+     * @param classSet
+     * @param className
+     */
     private static void doAddClass(Set<Class<?>> classSet, String className) {
         Class<?> cls = loadClass(className, false);
         classSet.add(cls);

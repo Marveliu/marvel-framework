@@ -1,19 +1,4 @@
 package com.marvel.plugin.security.realm;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import com.marvel.plugin.security.MarvelSecurity;
 import com.marvel.plugin.security.SecurityConstant;
@@ -31,6 +16,7 @@ import java.util.Set;
 
 /**
  * 基于 Marvel 的自定义 Realm（需要实现 MarvelSecurity 接口）
+ *
  * @author Marveliu
  * @since 18/04/2018
  **/
@@ -48,6 +34,7 @@ public class MarvelCustomRealm extends AuthorizingRealm {
 
     /**
      * 用于授权
+     *
      * @param token
      * @return
      * @throws AuthenticationException
@@ -58,12 +45,10 @@ public class MarvelCustomRealm extends AuthorizingRealm {
         if (token == null) {
             throw new AuthenticationException("parameter token is null");
         }
-
         // 获得用户名
         String username = ((UsernamePasswordToken) token).getUsername();
         // 获得密码
         String password = marvelSecurity.getPassword(username);
-
         // 用户名和密码放入AuthenticaitonInfo中，便于后续的验证
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo();
         authenticationInfo.setPrincipals(new SimplePrincipalCollection(username, super.getName()));
@@ -73,6 +58,7 @@ public class MarvelCustomRealm extends AuthorizingRealm {
 
     /**
      * 用于认证
+     *
      * @param principals
      * @return
      */
@@ -81,7 +67,6 @@ public class MarvelCustomRealm extends AuthorizingRealm {
         if (principals == null) {
             throw new AuthorizationException("parameter principals is null");
         }
-
         // 获得已经认证的用户名
         String username = (String) super.getAvailablePrincipal(principals);
         // 根据MarvelSecurity获得角色名集合

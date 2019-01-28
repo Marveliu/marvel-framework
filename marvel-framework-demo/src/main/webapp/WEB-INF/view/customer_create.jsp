@@ -46,11 +46,11 @@
 <script src="${BASE}/asset/lib/jquery/jquery.min.js"></script>
 <script src="${BASE}/asset/lib/jquery-form/jquery.form.min.js"></script>
 <script>
-    $(function() {
+    $(function () {
         $('#customer_form').ajaxForm({
             type: 'post',
             url: '${BASE}/customer_create',
-            success: function(data) {
+            success: function (data) {
                 if (data) {
                     location.href = '${BASE}/customer';
                 }

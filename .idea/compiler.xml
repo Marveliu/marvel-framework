@@ -16,6 +16,7 @@
       <module name="marvel-framework" target="1.5" />
       <module name="marvel-framework-core" target="1.8" />
       <module name="marvel-framework-demo" target="1.6" />
+      <module name="marvel-framework-orm" target="1.5" />
       <module name="marvel-framework-servlet" target="1.8" />
       <module name="marvel-framwork-servlet" target="1.8" />
       <module name="marvel-plugin-security" target="1.5" />

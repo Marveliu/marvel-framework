@@ -1,19 +1,4 @@
 package com.marvel.framework.helper;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import com.marvel.framework.annotation.Action;
 import com.marvel.framework.bean.Handler;
@@ -28,13 +13,15 @@ import java.util.Set;
 
 /**
  * 控制器助手类
+ *
  * @author Marveliu
  * @since 11/04/2018
  **/
-
 public final class ControllerHelper {
 
-    // 存放请求和处理器的映射关系
+    /**
+     * 存放请求和处理器的映射关系
+     */
     private static final Map<Request, Handler> ACTION_MAP = new HashMap<Request, Handler>();
 
     static {
@@ -52,7 +39,7 @@ public final class ControllerHelper {
                             // 加载action,获得URL映射规则
                             Action action = method.getAnnotation(Action.class);
                             String mapping = action.value();
-                            // 验证URL映射规则
+                            // 验证URL映射规则，并添加到ACTION_MAP
                             if (mapping.matches("\\w+:/\\w*")) {
                                 String[] array = mapping.split(":");
                                 if (ArrayUtil.isNotEmpty(array) && array.length == 2) {

@@ -1,19 +1,4 @@
 package com.marvel.util;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +10,7 @@ import java.util.Properties;
 
 /**
  * 属性文件工具类
+ *
  * @author Marveliu
  * @since 10/04/2018
  **/
@@ -41,15 +27,15 @@ public class PropsUtil {
         InputStream is = null;
         try {
             is = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
-            if(is == null){
-                throw new FileNotFoundException(fileName+"file not found!");
+            if (is == null) {
+                throw new FileNotFoundException(fileName + "file not found!");
             }
             props = new Properties();
             props.load(is);
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error("load properties file failure", e);
-        }finally {
+        } finally {
             // 关闭资源
             if (is != null) {
                 try {
@@ -113,7 +99,6 @@ public class PropsUtil {
         }
         return value;
     }
-
 
 
 }

@@ -1,19 +1,4 @@
 package com.marvel.framework.helper;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import com.marvel.framework.util.ReflectionUtil;
 
@@ -23,14 +8,17 @@ import java.util.Set;
 
 /**
  * Bean助手类
- * 相当于容器
+ * 实现IOC容器
+ *
  * @author Marveliu
  * @since 11/04/2018
  **/
 
 public final class BeanHelper {
 
-    // class类型和实例之间映射
+    /**
+     * class类型和实例之间映射
+     */
     private static final Map<Class<?>, Object> BEAN_MAP = new HashMap<Class<?>, Object>();
 
     static {

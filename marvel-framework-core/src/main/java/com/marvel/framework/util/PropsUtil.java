@@ -1,19 +1,4 @@
 package com.marvel.framework.util;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +10,10 @@ import java.util.Properties;
 
 /**
  * 属性文件工具类
+ *
  * @author Marveliu
  * @since 10/04/2018
  **/
-
 public class PropsUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PropsUtil.class);
@@ -41,15 +26,14 @@ public class PropsUtil {
         InputStream is = null;
         try {
             is = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
-            if(is == null){
-                throw new FileNotFoundException("file not found:"+fileName);
+            if (is == null) {
+                throw new FileNotFoundException("file not found:" + fileName);
             }
             props = new Properties();
             props.load(is);
-
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error("load properties file failure", e);
-        }finally {
+        } finally {
             // 关闭资源
             if (is != null) {
                 try {
@@ -64,6 +48,10 @@ public class PropsUtil {
 
     /**
      * 获取字符型属性（默认值为空字符串）
+     *
+     * @param props
+     * @param key
+     * @return
      */
     public static String getString(Properties props, String key) {
         return getString(props, key, "");
@@ -71,6 +59,11 @@ public class PropsUtil {
 
     /**
      * 获取字符型属性（可指定默认值）
+     *
+     * @param props
+     * @param key
+     * @param defaultValue
+     * @return
      */
     public static String getString(Properties props, String key, String defaultValue) {
         String value = defaultValue;
@@ -82,12 +75,23 @@ public class PropsUtil {
 
     /**
      * 获取数值型属性（默认值为 0）
+     *
+     * @param props
+     * @param key
+     * @return
      */
     public static int getInt(Properties props, String key) {
         return getInt(props, key, 0);
     }
 
-    // 获取数值型属性（可指定默认值）
+    /**
+     * 获取数值型属性（可指定默认值）
+     *
+     * @param props
+     * @param key
+     * @param defaultValue
+     * @return
+     */
     public static int getInt(Properties props, String key, int defaultValue) {
         int value = defaultValue;
         if (props.containsKey(key)) {
@@ -98,6 +102,10 @@ public class PropsUtil {
 
     /**
      * 获取布尔型属性（默认值为 false）
+     *
+     * @param props
+     * @param key
+     * @return
      */
     public static boolean getBoolean(Properties props, String key) {
         return getBoolean(props, key, false);
@@ -105,6 +113,11 @@ public class PropsUtil {
 
     /**
      * 获取布尔型属性（可指定默认值）
+     *
+     * @param props
+     * @param key
+     * @param defaultValue
+     * @return
      */
     public static boolean getBoolean(Properties props, String key, boolean defaultValue) {
         boolean value = defaultValue;
@@ -113,7 +126,6 @@ public class PropsUtil {
         }
         return value;
     }
-
 
 
 }

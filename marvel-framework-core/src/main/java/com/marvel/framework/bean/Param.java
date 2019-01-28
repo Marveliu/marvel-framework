@@ -1,19 +1,4 @@
 package com.marvel.framework.bean;
-/*
- * Copyright [2018] [Marveliu]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import com.marvel.framework.util.CastUtil;
 import com.marvel.framework.util.CollectionUtil;
@@ -42,7 +27,7 @@ public class Param {
         this.formParamList = formParamList;
     }
 
-    public Param(List<FormParam> formParamList,List<FileParam> fileParamList) {
+    public Param(List<FormParam> formParamList, List<FileParam> fileParamList) {
         this.fileParamList = fileParamList;
         this.formParamList = formParamList;
     }
@@ -72,6 +57,7 @@ public class Param {
 
     /**
      * 获取上传文件映射
+     *
      * @return
      */
     public Map<String, List<FileParam>> getFileMap() {
@@ -92,37 +78,40 @@ public class Param {
                 fileMap.put(fieldName, fileParamList);
             }
         }
-        return  fileMap;
+        return fileMap;
     }
 
     /**
      * 获得所有上传文件
+     *
      * @param fieldName
      * @return
      */
-    public List<FileParam> getFileList(String fieldName){
+    public List<FileParam> getFileList(String fieldName) {
         return getFileMap().get(fieldName);
     }
 
     /**
      * 获得单个文件
+     *
      * @param fieldName
      * @return
      */
-    public FileParam getFile(String fieldName){
+    public FileParam getFile(String fieldName) {
         List<FileParam> fileParamList = getFileList(fieldName);
         // 如果有多个文件返回null
-        if(CollectionUtil.isNotEmpty(fileParamList) && fileParamList.size() == 1){
-            return  fileParamList.get(0);
+        if (CollectionUtil.isNotEmpty(fileParamList) && fileParamList.size() == 1) {
+            return fileParamList.get(0);
         }
         return null;
     }
 
     /**
      * 验证参数是否为空
+     *
      * @return
      */
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         // form参数和file参数全部为空，返回true
         return CollectionUtil.isEmpty(fileParamList) && CollectionUtil.isEmpty(formParamList);
     }

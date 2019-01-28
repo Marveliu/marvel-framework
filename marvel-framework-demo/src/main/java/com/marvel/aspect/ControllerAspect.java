@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 
 /**
- *
- * 拦截controller里面的方法
+ * Controller调用记录
  *
  * @author Marveliu
  * @since 12/04/2018
