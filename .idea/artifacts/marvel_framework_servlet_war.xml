@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="marvel-framework-servlet:war">
-    <output-path>$PROJECT_DIR$/marvel-framework-servlet/target</output-path>
-    <root id="archive" name="marvel-framework-servlet-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="marvel-framework-servlet:war exploded" />
-    </root>
-  </artifact>
-</component>
